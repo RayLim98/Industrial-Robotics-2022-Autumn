@@ -1,0 +1,7 @@
+clear Bricks
+brickPos = [Position(-0.4, 0, 0), Position(-0.4, 0.2, 0), Position(-0.4, 0.4, 0), Position(-0.4, 0.6, 0)];
+
+Bricks(1) = PlyObject('Brick.ply', [brickPos(1).x, brickPos(1).y, brickPos(1).z]);
+Bricks(2) = PlyObject('Brick.ply', [brickPos(2).x, brickPos(2).y, brickPos(2).z]);
+Bricks(3) = PlyObject('Brick.ply', [brickPos(3).x, brickPos(3).y, brickPos(3).z]);
+Bricks(4) = PlyObject('Brick.ply', [brickPos(4).x, brickPos(4).y, brickPos(4).z]);
