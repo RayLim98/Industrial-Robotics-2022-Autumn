@@ -158,6 +158,7 @@ for xRotRads = deg2rad(-20):deg2rad(1):deg2rad(20)
         % Keep track of the scan data. It is more efficient to initialise
         % it to the correct size, however for brevity, it is done suboptimally here
         scanData = [scanData; rayEnd];         %#ok<AGROW>
+        plot3(scanData(:,1),scanData(:,2),scanData(:,3),'r.');
     end
 end
 % Plot the scan data
