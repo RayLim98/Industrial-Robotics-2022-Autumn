@@ -26,7 +26,7 @@ JqForLength1 = subs(subs(subs(Jq,l1,1),l2,1),l3,1)
 subs(subs(subs(JqForLength1,q1,0),q2,0),q3,0)
 
 % Confirm this by using the toolbox
-mdl_planar3;                                                                % Load 2-Link Planar Robot
+mdl_planar3;                                                              % Load 2-Link Planar Robot
 p3.jacob0([0,0,0])
 
 %% Q2 Dealing with Singularities
@@ -58,12 +58,13 @@ for i = 1:steps-1
     xdot = (x(:,i+1) - x(:,i))/deltaT;                                      % Calculate velocity at discrete time step
     J = p2.jacob0(qMatrix(i,:));                                            % Get the Jacobian at the current state
     J = J(1:2,:);                                                           % Take only first 2 rows
-    m(:,i)= sqrt(det(J*J'));                                                % Measure of Manipulability
+    m(:,i)= sqrt(det(J*J'))                                                % Measure of Manipulability
     if m(:,i) < minManipMeasure
         qdot = inv(J'*J + 0.01*eye(2))*J'*xdot;
     else
         qdot = inv(J) * xdot;                                               % Solve velocitities via RMRC
     end
+    qdot = inv(J) * xdot;     
     error(:,i) = xdot - J*qdot;
     qMatrix(i+1,:) = qMatrix(i,:) + deltaT * qdot';                         % Update next joint state
 end

@@ -5,7 +5,6 @@ function Lab7Question2Skeleton()
 close all;
 clear all;
 clc;
-
 %% Question 2: Dealing with Singularities
 
 %% 2.1 Load a 2-Link planar robot, and assign parameters for the simulation
@@ -34,21 +33,21 @@ qMatrix(1,:) = p2.ikine(T,[0 0],M);
 
 %% 2.4	Use Resolved Motion Rate Control to solve joint velocities 
 for i = 1:steps-1
-    T = ...;                                                                % End-effector transform at current joint state
-    xdot = ...;                                                            % Calculate velocity at discrete time step
-    J = ...;                                                               % Get the Jacobian at the current state (use jacob0)
+    T = p2.fkine(qMatrix(i,:));                                             % End-effector transform at current joint state
+    xdot = (x(:,i+1) - x(:,i))/deltaT                         % Calculate velocity at discrete time step
+    J = p2.jacob0(qMatrix(i,:));                                            % Get the Jacobian at the current state (use jacob0)
     J = J(1:2,:);                                                           % Take only first 2 rows
     m(:,i)= sqrt(det(J*J'));                                                % Measure of Manipulability
-    qdot = ......;                                                          % Solve velocitities via RMRC
+    qdot = inv(J) * xdot;                                                          % Solve velocitities via RMRC
 
-%%% 2.7 Use dampled least squared
-%     if m(:,i) < minManipMeasure
-%         qdot = ...;                                                       %Use dampled least squared
-%     else
-%         qdot = ...;                                                       % Solve velocitities via RMRC
-%     end
+%% 2.7 Use dampled least squared
+    if m(:,i) < minManipMeasure
+        qdot = ...;                                                       %Use dampled least squared
+    else
+        qdot = ...;                                                       % Solve velocitities via RMRC
+    end
 
-    errorValue(:,i) = ...;                                                  % Velocity error
+    errorValue(:,i) = xdot - J*qdot;                                                  % Velocity error
     qMatrix(i+1,:) = ...;                                                   % Update next joint state
     end
 
